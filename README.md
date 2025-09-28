@@ -11,27 +11,12 @@
 
 Este proyecto corresponde al **frontend** del sistema de **gestión de trámites de tránsito**.
 
-La aplicación web permite a **ciudadanos y funcionarios** realizar y administrar procesos relacionados con los trámites de tránsito.
+La aplicación web permite a **ciudadanos y funcionarios**:
 
-Incluye:
-
-* 🔐 **Login y registro** con almacenamiento de sesión en **sessionStorage + cookies**.
-* 📑 **Módulos CRUD**:
-
-  * Gestión de usuarios y roles.
-  * Gestión de trámites.
-  * Tipos de trámites.
-  * Gestión de turnos.
-* 🖥️ **Dashboard administrativo** con navegación lateral (sidebar).
-* 📊 Interfaz moderna, rápida y responsiva con **Next.js 15 + TailwindCSS**.
-
----
-
-## 🧑‍💻 Desarrollador
-
-**Cristian Correa**
-📧 Email: [camilomanco2005@gmail.com](mailto:camilomanco2005@gmail.com)
-💼 GitHub: [cristianManco](https://github.com/cristianManco)
+* Iniciar sesión y gestionar sus credenciales.
+* Administrar trámites de tránsito y usuarios.
+* Consultar y manejar turnos.
+* Acceder a un **dashboard moderno y responsivo**.
 
 ---
 
@@ -41,17 +26,16 @@ Incluye:
 
 * **Frontend desacoplado (SPA + SSR con Next.js)**.
 * Arquitectura **modular por capas**:
-
   * **UI Layer** → Componentes React + TailwindCSS (formularios, tablas, layouts, sidebar).
-  * **Hooks/Services Layer** → Lógica de negocio del frontend (ej: `useAuth`, validación de sesión).
-  * **Data Layer** → Comunicación con la API REST (NestJS + SQL Server).
+  * **Hooks/Services Layer** → Lógica de negocio del frontend (`useAuth`, validaciones, sesión).
+  * **Data Layer** → Comunicación con la **API REST** (backend en **NestJS + PostgreSQL**).
 
-### 🔹 Sustento
+### 🔹 Características clave
 
-✔️ Escalable: cada módulo de trámites es independiente.
-✔️ Separación de responsabilidades entre UI, lógica y datos.
-✔️ Seguridad en sesión: **cookies + JWT + sessionStorage**.
-✔️ Optimizado para despliegue en **Vercel, AWS o servidores Node.js**.
+✔️ Escalable: cada módulo es independiente.  
+✔️ Separación de responsabilidades entre UI, lógica y datos.  
+✔️ Seguridad en sesión: **JWT + cookies + sessionStorage**.  
+✔️ Preparado para despliegue en **Vercel, AWS o servidores Node.js**.  
 
 ---
 
@@ -68,22 +52,28 @@ Incluye:
 
 ## 📂 Estructura del proyecto
 
+La estructura sigue la convención de **Next.js App Router**, con organización modular:
+
 ```
+
 frontend/
-│── src/
-│   ├── app/                 # Páginas y rutas (Next.js App Router)
-│   │   ├── auth/            # Login y registro
-│   │   ├── dashboard/       # Panel principal con sidebar y todas las gestiones
-│   ├── components/          # Componentes reutilizables (inputs, tablas, modales)
-│   ├── hooks/               # Hooks personalizados (ej: useAuth)
-│   ├── libs/                # Configuración de axios y manejo de cookies
-│   ├── types/               # Definiciones de tipos en TypeScript
 │── public/                  # Archivos estáticos (logos, íconos)
-│── package.json
-│── tailwind.config.ts
-│── tsconfig.json
-│── README.md
-```
+│── src/
+│   ├── app/                 # Rutas y páginas (Next.js App Router)
+│   │   ├── auth/            # Login y registro
+│   │   ├── dashboard/       # Panel principal con sidebar y gestiones
+│   ├── components/          # Componentes reutilizables (inputs, tablas, modales, alerts)
+│   ├── hooks/               # Hooks personalizados (ej: useAuth, useFetch)
+│   ├── libs/                # Configuración global (axios, auth, cookies)
+│   ├── types/               # Definiciones de tipos en TypeScript
+│   ├── middleware.ts        # Middleware para validación de rutas y auth
+│── .env.local               # Variables de entorno (ignorada en git)
+│── package.json             # Dependencias del proyecto
+│── next.config.ts           # Configuración de Next.js
+│── tailwind.config.ts       # Configuración de TailwindCSS
+│── README.md                # Documentación
+
+````
 
 ---
 
@@ -94,53 +84,53 @@ frontend/
 ```bash
 git clone https://github.com/cristianManco/tramites-transito-front.git
 cd tramites-transito-front
-```
+````
 
 ### 2️⃣ Instalar dependencias
 
 ```bash
-pnpm install
-# o
 npm install
+# o
+pnpm install
 ```
 
 ### 3️⃣ Configurar variables de entorno
 
-Crear `.env.local` en la raíz:
+Crear `.env.local` en la raíz con al menos:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:3002
 ```
 
-> ⚠️ Ajusta el puerto según la configuración de tu backend NestJS.
+> ⚠️ Ajusta el puerto según la configuración de tu backend en **NestJS**.
 
 ### 4️⃣ Ejecutar en desarrollo
 
 ```bash
-pnpm dev
-# o
 npm run dev
+# o
+pnpm dev
 ```
 
-La app estará en 👉 [http://localhost:3000](http://localhost:3000)
+La aplicación estará en 👉 [http://localhost:3000](http://localhost:3000)
 
 ### 5️⃣ Build para producción
 
 ```bash
-pnpm build && pnpm start
-# o
 npm run build && npm run start
+# o
+pnpm build && pnpm start
 ```
 
 ---
 
 ## 🔑 Credenciales de prueba
 
-Usuario administrador demo (solo ambiente de pruebas):
+Puedes **crear un usuario desde el registro** o usar las credenciales de prueba ya disponibles:
 
 ```
-email: admin@test.com
-password: 123456
+email: cristian@tramites.net
+password: zxcvbnm
 ```
 
 ---
@@ -152,23 +142,29 @@ password: 123456
 1. Inicia el backend en `localhost:3002`.
 2. Levanta el frontend en `localhost:3000`.
 3. Inicia sesión con el usuario demo o regístrate.
-4. Explora los módulos:
+4. Explora los módulos disponibles:
 
    * Dashboard con **sidebar de navegación**.
    * Gestión de usuarios.
    * Trámites y tipos de trámites.
    * Turnos.
 
-
+---
 
 ## 🎨 Sustento de diseño
 
-* **Next.js (SSR + SPA)** → mejor rendimiento y SEO.
-* **TailwindCSS** → estilos consistentes y modernos.
+* **Next.js (SSR + SPA)** → rendimiento y SEO mejorados.
+* **TailwindCSS** → estilos modernos y consistentes.
 * **Arquitectura modular** → facilita mantenimiento y escalabilidad.
 * **JWT + Cookies + sessionStorage** → autenticación segura y flexible.
 
 ---
 
+## 🧑‍💻 Desarrollador
 
+**Cristian Manco**
+📧 Email: [camilomanco2005@gmail.com](mailto:camilomanco2005@gmail.com)
+💼 GitHub: [cristianManco](https://github.com/cristianManco)
+
+```
 
