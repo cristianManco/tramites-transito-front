@@ -1,10 +1,10 @@
-import { Users, FileText, Clock, ClipboardList } from "lucide-react"
-import { SidebarItem } from "./types/sidebar"
+import { Home, Users, FileText, Clock, ClipboardList } from "lucide-react";
+import { SidebarItem } from "./types/sidebar";
 
 export const sidebarMenu: SidebarItem[] = [
   {
     title: "Inicio",
-    icon: Users,
+    icon: Home,
     href: "/dashboard/inicio",
     cod_modulo: "inicio",
   },
@@ -25,18 +25,6 @@ export const sidebarMenu: SidebarItem[] = [
     icon: Clock,
     href: "/dashboard/turnos",
     cod_modulo: "turnos",
-    // submenu: [
-    //   {
-    //     title: "Con Asesores",
-    //     href: "/dashboard/turnos/asesores",
-    //     cod_modulo: "turnos_asesores",
-    //   },
-    //   {
-    //     title: "Con Ciudadanos",
-    //     href: "/dashboard/turnos/ciudadanos",
-    //     cod_modulo: "turnos_ciudadanos",
-    //   },
-    // ],
   },
   {
     title: "Trámites",
@@ -44,4 +32,4 @@ export const sidebarMenu: SidebarItem[] = [
     href: "/dashboard/tramites",
     cod_modulo: "tramites",
   },
-]
+];

@@ -4,7 +4,6 @@ import { SidebarItem, UseSidebarProps } from "@/components/types/sidebar"
 import { normalizeText } from "@/libs/utils/normalize"
 import { useAuth } from "./useAuth"
 
-
 export const useSidebar = ({
     isOpen,
     toggleSidebar,

@@ -1,5 +1,6 @@
 "use client";
 
+import { Usuario } from "@/libs/services/user";
 import { useState, useEffect } from "react";
 
 export interface Tramite {
@@ -13,22 +14,9 @@ export interface Tramite {
   datos_extra?: Record<string, any>;
 }
 
-export interface Usuario {
-  id: number;
-  name: string;
-  email: string;
-}
-
-export interface TipoTramite {
-  id: number;
-  nombre: string;
-  descripcion?: string;
-}
-
 export function useTramites() {
   const [tramites, setTramites] = useState<Tramite[]>([]);
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [tipos, setTipos] = useState<TipoTramite[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchTramites = async () => {
@@ -50,15 +38,6 @@ export function useTramites() {
       setUsuarios(await res.json());
     } catch (error) {
       console.error("Error cargando usuarios", error);
-    }
-  };
-
-  const fetchTipos = async () => {
-    try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/tipo-tramites/all`);
-      setTipos(await res.json());
-    } catch (error) {
-      console.error("Error cargando tipos de trámite", error);
     }
   };
 
@@ -97,8 +76,7 @@ export function useTramites() {
   useEffect(() => {
     fetchTramites();
     fetchUsuarios();
-    fetchTipos();
   }, []);
 
-  return { tramites, usuarios, tipos, loading, createTramite, updateTramite, deleteTramite, detailsTramite };
+  return { tramites, usuarios, loading, createTramite, updateTramite, deleteTramite, detailsTramite };
 }

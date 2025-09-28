@@ -92,8 +92,8 @@ frontend/
 ### 1️⃣ Clonar el repositorio
 
 ```bash
-git clone https://github.com/cristianManco/tramites-transito.git
-cd tramites-transito/frontend
+git clone https://github.com/cristianManco/tramites-transito-front.git
+cd tramites-transito-front
 ```
 
 ### 2️⃣ Instalar dependencias

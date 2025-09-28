@@ -6,7 +6,7 @@ export interface Turno {
   id: number;
   asesor_id: number;
   ciudadano_id: number;
-  fecha: string; // ISO
+  fecha: string;
   estado: EstadoTurno;
   asesor?: { id: number; nombre: string; email: string };
   ciudadano?: { id: number; nombre: string; email: string };
