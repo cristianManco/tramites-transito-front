@@ -1,36 +1,174 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚦 Sistema de Gestión de Trámites de Tránsito - Frontend
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=nextdotjs)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-38BDF8?logo=tailwindcss)](https://tailwindcss.com/)
+[![Axios](https://img.shields.io/badge/Axios-HTTP-yellow?logo=axios)](https://axios-http.com/)
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📖 Descripción
+
+Este proyecto corresponde al **frontend** del sistema de **gestión de trámites de tránsito**.
+
+La aplicación web permite a **ciudadanos y funcionarios** realizar y administrar procesos relacionados con los trámites de tránsito.
+
+Incluye:
+
+* 🔐 **Login y registro** con almacenamiento de sesión en **sessionStorage + cookies**.
+* 📑 **Módulos CRUD**:
+
+  * Gestión de usuarios y roles.
+  * Gestión de trámites.
+  * Tipos de trámites.
+  * Gestión de turnos.
+* 🖥️ **Dashboard administrativo** con navegación lateral (sidebar).
+* 📊 Interfaz moderna, rápida y responsiva con **Next.js 15 + TailwindCSS**.
+
+---
+
+## 🧑‍💻 Desarrollador
+
+**Cristian Correa**
+📧 Email: [camilomanco2005@gmail.com](mailto:camilomanco2005@gmail.com)
+💼 GitHub: [cristianManco](https://github.com/cristianManco)
+
+---
+
+## 🏗️ Arquitectura
+
+### 🔹 Tipo de arquitectura
+
+* **Frontend desacoplado (SPA + SSR con Next.js)**.
+* Arquitectura **modular por capas**:
+
+  * **UI Layer** → Componentes React + TailwindCSS (formularios, tablas, layouts, sidebar).
+  * **Hooks/Services Layer** → Lógica de negocio del frontend (ej: `useAuth`, validación de sesión).
+  * **Data Layer** → Comunicación con la API REST (NestJS + SQL Server).
+
+### 🔹 Sustento
+
+✔️ Escalable: cada módulo de trámites es independiente.
+✔️ Separación de responsabilidades entre UI, lógica y datos.
+✔️ Seguridad en sesión: **cookies + JWT + sessionStorage**.
+✔️ Optimizado para despliegue en **Vercel, AWS o servidores Node.js**.
+
+---
+
+## 🚀 Tecnologías principales
+
+<p align="center">
+  <img src="https://cdn.worldvectorlogo.com/logos/next-js.svg" alt="Next.js" width="70" />
+  <img src="https://cdn.worldvectorlogo.com/logos/typescript.svg" alt="TypeScript" width="70" />
+  <img src="https://cdn.worldvectorlogo.com/logos/tailwindcss.svg" alt="TailwindCSS" width="70" />
+  <img src="https://axios-http.com/assets/logo.svg" alt="Axios" width="70" />
+</p>
+
+---
+
+## 📂 Estructura del proyecto
+
+```
+frontend/
+│── src/
+│   ├── app/                 # Páginas y rutas (Next.js App Router)
+│   │   ├── auth/            # Login y registro
+│   │   ├── dashboard/       # Panel principal con sidebar y todas las gestiones
+│   ├── components/          # Componentes reutilizables (inputs, tablas, modales)
+│   ├── hooks/               # Hooks personalizados (ej: useAuth)
+│   ├── libs/                # Configuración de axios y manejo de cookies
+│   ├── types/               # Definiciones de tipos en TypeScript
+│── public/                  # Archivos estáticos (logos, íconos)
+│── package.json
+│── tailwind.config.ts
+│── tsconfig.json
+│── README.md
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Instalación y ejecución
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1️⃣ Clonar el repositorio
 
-## Learn More
+```bash
+git clone https://github.com/cristianManco/tramites-transito.git
+cd tramites-transito/frontend
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 2️⃣ Instalar dependencias
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm install
+# o
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3️⃣ Configurar variables de entorno
 
-## Deploy on Vercel
+Crear `.env.local` en la raíz:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> ⚠️ Ajusta el puerto según la configuración de tu backend NestJS.
+
+### 4️⃣ Ejecutar en desarrollo
+
+```bash
+pnpm dev
+# o
+npm run dev
+```
+
+La app estará en 👉 [http://localhost:3000](http://localhost:3000)
+
+### 5️⃣ Build para producción
+
+```bash
+pnpm build && pnpm start
+# o
+npm run build && npm run start
+```
+
+---
+
+## 🔑 Credenciales de prueba
+
+Usuario administrador demo (solo ambiente de pruebas):
+
+```
+email: admin@test.com
+password: 123456
+```
+
+---
+
+## 🛠️ Pruebas
+
+### 🔹 Prueba manual
+
+1. Inicia el backend en `localhost:3002`.
+2. Levanta el frontend en `localhost:3000`.
+3. Inicia sesión con el usuario demo o regístrate.
+4. Explora los módulos:
+
+   * Dashboard con **sidebar de navegación**.
+   * Gestión de usuarios.
+   * Trámites y tipos de trámites.
+   * Turnos.
+
+
+
+## 🎨 Sustento de diseño
+
+* **Next.js (SSR + SPA)** → mejor rendimiento y SEO.
+* **TailwindCSS** → estilos consistentes y modernos.
+* **Arquitectura modular** → facilita mantenimiento y escalabilidad.
+* **JWT + Cookies + sessionStorage** → autenticación segura y flexible.
+
+---
+
+
+
