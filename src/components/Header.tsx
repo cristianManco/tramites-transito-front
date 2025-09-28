@@ -1,6 +1,6 @@
 "use client"
 import { useAuth } from "@/hooks/useAuth"
-import { SidebarOpenIcon, UserRoundCogIcon} from "lucide-react"
+import { SidebarOpenIcon} from "lucide-react"
 import Link from "next/link"
 import { UserAvatar } from "./UserAvatar"
 
@@ -28,14 +28,7 @@ export function Header({ toggleSidebar, isSidebarOpen }: HeaderProps) {
                 </button>
                 <p className="text-gray-400 text-[11px]">v{version}</p>
             </div>
-            <div className="flex items-center gap-4">
-                <Link
-                    className="p-1 text-gray-400 hover:text-white transition duration-200"
-                    href="/"
-                    title="Cambiar perfil"
-                >
-                    <UserRoundCogIcon className="size-4" />
-                </Link>
+            <div className="flex items-center gap-4">               
                 <div className="flex items-center gap-2">
                     {session ? (
                         <>

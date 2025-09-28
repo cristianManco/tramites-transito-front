@@ -37,7 +37,7 @@ export default function AdminLayout({
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen bg-slate-200">
+            <div className="flex justify-center items-center min-h-screen bg-slate-800">
                 <Loader />
             </div>
         )
@@ -54,11 +54,11 @@ export default function AdminLayout({
             />
 
             <div
-                className={`flex-1 flex flex-col bg-slate-200 transition-all duration-300 ${sidebarOpen ? "md:ml-60" : "md:ml-16"
+                className={`flex-1 flex flex-col bg-slate-800 transition-all duration-300 ${sidebarOpen ? "md:ml-60" : "md:ml-16"
                     }`}
             >
                 <Header toggleSidebar={toggleSidebar} isSidebarOpen={sidebarOpen} />
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-200 py-2 mt-16 mx-4">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-800 py-2 mt-16 mx-4">
                     {children}
                 </main>
             </div>

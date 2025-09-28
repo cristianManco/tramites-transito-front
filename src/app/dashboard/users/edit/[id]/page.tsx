@@ -7,9 +7,6 @@ interface Props {
 export default function EditUsuarioPage({ params }: Props) {
   const id = Number(params.id);
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Editar Usuario</h2>
-      <UserForm id={id} />
-    </div>
+    <UserForm id={id} />
   );
 }

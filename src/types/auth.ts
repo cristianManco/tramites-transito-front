@@ -7,7 +7,7 @@ export interface RegisterDto {
     name: string;
     email: string;
     password: string;
-    role?: string; // "ciudadano" por defecto
+    role?: string;
 }
 
 export interface AuthResponse {

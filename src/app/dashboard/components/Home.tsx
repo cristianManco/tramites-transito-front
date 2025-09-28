@@ -1,50 +1,161 @@
 'use client';
 
-import { UserCheck2Icon } from "lucide-react";
-
+import { useEffect, useState } from "react";
+import {
+    UserCheck2Icon,
+    FileTextIcon,
+    ListChecksIcon,
+    ClockIcon,
+} from "lucide-react";
+import { getTiposTramite, TipoTramite } from "@/libs/services/type-tramites";
+import { Turno, getTurnos } from "@/libs/services/turnos";
+import { useTramites } from "@/hooks/useTramites";
 
 export default function AdminHome() {
+    const [tipos, setTipos] = useState<TipoTramite[]>([]);
+    const [turnos, setTurnos] = useState<Turno[]>([]);
+    const [loading, setLoading] = useState(true);
 
+    const { tramites, usuarios } = useTramites();
+
+    useEffect(() => {
+        loadTipos();
+        loadTurnos();
+    }, []);
+
+    const loadTipos = async () => {
+        const data = await getTiposTramite();
+        setTipos(data);
+    };
+
+    const loadTurnos = async () => {
+        setLoading(true);
+        const data = await getTurnos();
+        setTurnos(data);
+        setLoading(false);
+    };
 
     return (
-        <div className="w-full mx-0 p-1">
-            {/* Header */}
-            <div className="bg-gradient-to-r from-blue-700 via-blue-900 to-blue-700 px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-t-xl">
-                <div className="flex flex-col justify-center items-center">
-                    <div className="flex items-center space-x-1 sm:space-x-2">
-                        <UserCheck2Icon className="size-3 sm:size-4 text-white" />
-                        <h1 className="text-base sm:text-lg font-bold text-white">Dashboard de Gestión Humana</h1>
-                    </div>
-                    <div className="text-gray-300 text-[11px] sm:text-xs">
-                        <p>{new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        <div className="min-h-screen bg-slate-800 p-6">
+            <div className="max-w-7xl mx-auto space-y-6">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 bg-slate-700 rounded-lg">
+                            <UserCheck2Icon className="w-6 h-6 text-slate-300" />
+                        </div>
+                        <div>
+                            <h1 className="text-2xl font-semibold text-white">
+                                Dashboard de Gestión de Trámites
+                            </h1>
+                            <p className="text-slate-400 text-sm">
+                                {tramites.length} trámite
+                                {tramites.length !== 1 ? "s" : ""} en el sistema
+                            </p>
+                        </div>
                     </div>
                 </div>
+
+                {/* Stats Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <CardIndicator
+                        icon={
+                            <UserCheck2Icon className="w-5 h-5 text-blue-600" />
+                        }
+                        title="Usuarios"
+                        value={usuarios.length}
+                        bg="bg-blue-100"
+                    />
+                    <CardIndicator
+                        icon={<FileTextIcon className="w-5 h-5 text-green-600" />}
+                        title="Trámites"
+                        value={tramites.length}
+                        bg="bg-green-100"
+                    />
+                    <CardIndicator
+                        icon={<ListChecksIcon className="w-5 h-5 text-purple-600" />}
+                        title="Tipos"
+                        value={tipos.length}
+                        bg="bg-purple-100"
+                    />
+                    <CardIndicator
+                        icon={<ClockIcon className="w-5 h-5 text-orange-600" />}
+                        title="Turnos"
+                        value={turnos.length}
+                        bg="bg-orange-100"
+                    />
+                </div>
+
+                {/* Data Sections */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Trámites por tipo */}
+                    <article className="bg-slate-900 border border-slate-700 rounded-lg p-4">
+                        <h2 className="text-sm font-semibold text-white mb-3">
+                            Trámites por tipo
+                        </h2>
+                        <ul className="space-y-2">
+                            {tipos.map((t) => (
+                                <li
+                                    key={t.id}
+                                    className="flex justify-between text-sm text-slate-300 border-b border-slate-700 pb-1"
+                                >
+                                    <span>{t.nombre}</span>
+                                    <span className="font-bold text-white">
+                                        {tramites.filter((tr) => tr.tipo_id === t.id).length}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    </article>
+
+                    {/* Últimos turnos */}
+                    <article className="bg-slate-900 border border-slate-700 rounded-lg p-4">
+                        <h2 className="text-sm font-semibold text-white mb-3">
+                            Últimos turnos
+                        </h2>
+                        {loading ? (
+                            <p className="text-slate-400 text-sm">Cargando...</p>
+                        ) : (
+                            <ul className="space-y-2">
+                                {turnos.slice(0, 5).map((turno) => (
+                                    <li
+                                        key={turno.id}
+                                        className="flex justify-between text-sm text-slate-300 border-b border-slate-700 pb-1"
+                                    >
+                                        <span>{turno.ciudadano_id}</span>
+                                        <span className="text-slate-400">
+                                            {new Date(turno.fecha).toLocaleDateString()}
+                                        </span>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </article>
+                </div>
             </div>
+        </div>
+    );
+}
 
-            {/* Indicadores - Grid con responsividad */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full py-3 sm:py-4">
-
-            </div>
-
-            {/* Secciones de datos - Cambio de flex-row a flex-col en pantallas pequeñas */}
-            <div className="flex flex-col lg:flex-row justify-between gap-4 sm:gap-[1%] w-full pb-4">
-                {/* Requisiciones Recientes */}
-                <article className="flex flex-col gap-2 w-full lg:w-[50%] border border-gray-300 bg-gray-50 p-3 sm:p-5 rounded-xl">
-                    <section className="flex items-center justify-between gap-2">
-                    </section>
-                    <section className="flex flex-col items-center gap-3 sm:gap-5 mt-2 sm:mt-4 h-full">
-
-                    </section>
-                </article>
-
-                {/* Seleccionados Recientes */}
-                <article className="flex flex-col gap-2 w-full lg:w-[50%] border border-gray-300 bg-gray-50 p-3 sm:p-5 rounded-xl mt-4 lg:mt-0">
-                    <section className="flex items-center justify-between gap-2">
-                        
-                    </section>
-                    <section className="flex flex-col items-center mt-2 sm:mt-4 gap-3 sm:gap-5 h-full">                 
-                    </section>
-                </article>
+function CardIndicator({
+    icon,
+    title,
+    value,
+    bg,
+}: {
+    icon: React.ReactNode;
+    title: string;
+    value: number;
+    bg: string;
+}) {
+    return (
+        <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
+            <div className="flex items-center gap-3">
+                <div className={`p-2 rounded-lg ${bg}`}>{icon}</div>
+                <div>
+                    <p className="text-sm text-slate-400">{title}</p>
+                    <p className="text-xl font-semibold text-white">{value}</p>
+                </div>
             </div>
         </div>
     );

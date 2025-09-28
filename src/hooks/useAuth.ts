@@ -18,13 +18,12 @@ export function useAuth() {
   const login = async (data: LoginDto) => {
     const res = await api.post<AuthResponse>("/auth/login", data);
 
-    // 🔹 Guardamos en sessionStorage
     sessionStorage.setItem("token", res.data.access_token);
     sessionStorage.setItem("user", JSON.stringify(res.data.user));
 
     // 🔹 Guardamos en cookie (para middleware y SSR)
     Cookies.set("token", res.data.access_token, {
-      expires: 1, // 1 día
+      expires: 1,
       sameSite: "strict",
     });
 
@@ -50,7 +49,6 @@ export function useAuth() {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("user");
 
-    // 🔹 Borramos la cookie también
     Cookies.remove("token");
 
     setUser(null);

@@ -14,8 +14,7 @@ export function UserAvatar({ user, size = 24, className }: { user: any, size?: n
                 height={size}
                 className="rounded-full"
                 style={{ width: size, height: size }}
-                quality={100}
-                
+                quality={100}                
             />
         )
     }
